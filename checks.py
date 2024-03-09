@@ -27,3 +27,11 @@ def firingSolution(display_grid, ship_grid, row, col):
         display_grid[row][col] = " "
         result += "MISS!"
     return result
+
+def turnsToCountdown(countdown, countdownSteps):
+    print(countdown, countdownSteps)
+    if countdown == 0:
+        return countdownSteps
+    else:
+        return countdown - 1
+    

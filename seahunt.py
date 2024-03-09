@@ -6,6 +6,7 @@ import display
 from logo import logo
 from ship_list import ships
 
+# create something for ships to shoot at 
 # the submarine will move, each time it moves it will reset the waters
 # it moves in a direction at variable speed
 # ships will fire at targets a given number of turns, 
@@ -22,10 +23,14 @@ display_grid = grid.create_grid()
 ship_grid = grid.populate_grid(grid.create_grid(), ships)
 # Create Game Over Flag
 gameOver = False
+# Create Firing Countdown
+
+countdownSteps  = 5
+countdown = countdownSteps
 
 while not gameOver:
     # set display
-    display.game_board(logo, result, ships, display_grid)
+    display.game_board(logo, result, ships, display_grid, countdown)
     
     # get inputs
     print("Enter a row and column to fire at: ")
@@ -42,6 +47,8 @@ while not gameOver:
     
     if len(ships) == 0:
         gameOver = True
+
+    countdown = checks.turnsToCountdown(countdown, countdownSteps)
 display.game_board(logo, result, ships, display_grid)
 print("CONGRATULATIONS! YOU HAVE SUNK ALL THE SHIPS!")
  
