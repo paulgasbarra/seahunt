@@ -3,6 +3,7 @@ import input
 import checks
 import utils
 import display
+import random
 from logo import logo
 from ship_list import ships
 
@@ -28,9 +29,31 @@ gameOver = False
 countdownSteps  = 5
 countdown = countdownSteps
 
+castles = [ "🏰", "🏰", "🏰" ]
+
+def move_sub(ship_grid, display_grid):
+    distance = random.choice([1, 2, 3])
+    direction = random.choice(['up', 'right', 'down', 'left'])
+    #pick distance
+    #pick direction
+    #check boundries
+    #check other ships
+    #move distance
+    #update display grid
+    #find 
+    
+    return 
+
+def enemy_fire(castles):
+    random.choice([1,2,3])
+    if random == 3:
+        return castles.pop()
+
 while not gameOver:
     # set display
-    display.game_board(logo, result, ships, display_grid, countdown)
+    display.game_board(logo, result, ships, display_grid, countdown, castles)
+    if countdown == 0:
+        castles = enemy_fire(castles)
     
     # get inputs
     print("Enter a row and column to fire at: ")
@@ -49,6 +72,7 @@ while not gameOver:
         gameOver = True
 
     countdown = checks.turnsToCountdown(countdown, countdownSteps)
+    ship_grid = move_sub(ship_grid, display_grid)
 display.game_board(logo, result, ships, display_grid)
 print("CONGRATULATIONS! YOU HAVE SUNK ALL THE SHIPS!")
  
