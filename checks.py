@@ -1,4 +1,6 @@
-def ifSunk(ship_grid, ships):
+import random
+
+def if_sunk(ship_grid, ships):
     # check grid for first letter of each ship
     # if letter not there remove ship from list 
     # notify as sunk
@@ -16,7 +18,7 @@ def ifSunk(ship_grid, ships):
         del ships[ship]
     return ships
 
-def firingSolution(display_grid, ship_grid, row, col):
+def firing_solution(display_grid, ship_grid, row, col):
     alpha = "ABCDEFGHIJ"
     result = f"{row + 1}:{alpha[col]} is a "
     if ship_grid[row][col] != ".":
@@ -28,10 +30,18 @@ def firingSolution(display_grid, ship_grid, row, col):
         result += "MISS!"
     return result
 
-def turnsToCountdown(countdown, countdownSteps):
-    print(countdown, countdownSteps)
+def countdown_to_salvo(countdown, countdownSteps):
     if countdown == 0:
         return countdownSteps
     else:
         return countdown - 1
-    
+
+def enemy_fire(castles):
+    hit = random.choice([1,2,3]) == 1
+    print("Enemy firing at your position.")
+    if hit:
+        castles.pop()
+        print(f"Enemy has hit your position. {len(castles)} canon left.")
+    else:
+        print("Enemy fire missed.")
+    return castles

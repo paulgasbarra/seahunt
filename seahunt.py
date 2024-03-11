@@ -6,14 +6,21 @@ import display
 import random
 from logo import logo
 from ship_list import ships
+ 
+# carrier fires every other turn
+# battleship and destroyer fires every 2 turns 
+# submarine fires every 3
+# pt boat fires every 4 turns
 
-# create something for ships to shoot at 
-# the submarine will move, each time it moves it will reset the waters
+# the submarine will move, each time it moves through a revealed zone or sunk ship, 
+# it will reset the waters to "."
+
 # it moves in a direction at variable speed
 # ships will fire at targets a given number of turns, 
 # if a ship was hit it will delay its firing by 1 turn
 # the bigger the ship, the more often it will fire
 # you get 3 sonar checks that will clear 9 squares for 1 turn 
+
 # GAME SETUP
 
 # Create string that notifies player of action results
@@ -24,9 +31,8 @@ display_grid = grid.create_grid()
 ship_grid = grid.populate_grid(grid.create_grid(), ships)
 # Create Game Over Flag
 gameOver = False
-# Create Firing Countdown
-
-countdownSteps  = 5
+# Initialize Firing Countdown
+countdownSteps  = 3
 countdown = countdownSteps
 
 castles = [ "🏰", "🏰", "🏰" ]
@@ -44,21 +50,11 @@ def move_sub(ship_grid, display_grid):
     
     return ship_grid
 
-def enemy_fire(castles):
-    random.choice([1,2,3])
-    print("Enemy 7firing at your position.")
-    if random == 3:
-        print(f"Enemy has hit your position. {len(castles)} canon left.")
-        castles.pop()
-    else:
-        print("Enemy fire missed.")
-    return castles
-
 while not gameOver:
     # set display
     display.game_board(logo, result, ships, display_grid, countdown, castles)
     if countdown == 0:
-        castles = enemy_fire(castles)
+        castles = checks.enemy_fire(castles)
     
     # get inputs
     print("Enter a row and column to fire at: ")
@@ -66,9 +62,9 @@ while not gameOver:
     col = input.get_col()
 
     # get results
-    result = checks.firingSolution(display_grid, ship_grid, row, col)
+    result = checks.firing_solution(display_grid, ship_grid, row, col)
     precheck = list(ships)
-    ships = checks.ifSunk(ship_grid, ships)
+    ships = checks.if_sunk(ship_grid, ships)
     if len(precheck) > len(ships):
         sunk_ship = utils.get_dict_difference(precheck, ships)
         result += (f" YOU JUST SUNK THE {next(iter(sunk_ship))}!")
@@ -76,7 +72,7 @@ while not gameOver:
     if len(ships) == 0 or len(castles) == 0:
         gameOver = True
 
-    countdown = checks.turnsToCountdown(countdown, countdownSteps)
+    countdown = checks.countdown_to_salvo(countdown, countdownSteps)
     ship_grid = move_sub(ship_grid, display_grid)
 display.game_board(logo, result, ships, display_grid, countdown, castles)
 
