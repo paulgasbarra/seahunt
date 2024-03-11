@@ -14,7 +14,7 @@ def ship_list(ships):
     return str(f"{len(ships)} ship{plural} left: {ship_list_str}") 
 
 def game_board(logo, result, ships, display_grid, countdown, castles):
-    #os.system('clear')
+    os.system('clear')
     print(logo)
     print(" ")
     print(ship_list(ships))

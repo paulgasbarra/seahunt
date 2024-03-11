@@ -42,12 +42,17 @@ def move_sub(ship_grid, display_grid):
     #update display grid
     #find 
     
-    return 
+    return ship_grid
 
 def enemy_fire(castles):
     random.choice([1,2,3])
+    print("Enemy 7firing at your position.")
     if random == 3:
-        return castles.pop()
+        print(f"Enemy has hit your position. {len(castles)} canon left.")
+        castles.pop()
+    else:
+        print("Enemy fire missed.")
+    return castles
 
 while not gameOver:
     # set display
@@ -68,11 +73,15 @@ while not gameOver:
         sunk_ship = utils.get_dict_difference(precheck, ships)
         result += (f" YOU JUST SUNK THE {next(iter(sunk_ship))}!")
     
-    if len(ships) == 0:
+    if len(ships) == 0 or len(castles) == 0:
         gameOver = True
 
     countdown = checks.turnsToCountdown(countdown, countdownSteps)
     ship_grid = move_sub(ship_grid, display_grid)
-display.game_board(logo, result, ships, display_grid)
-print("CONGRATULATIONS! YOU HAVE SUNK ALL THE SHIPS!")
+display.game_board(logo, result, ships, display_grid, countdown, castles)
+
+if len(castles) == 0:
+    print("MISSION FAILURE! ALL YOUR CANNON HAVE BEEN DESTROYED!")
+else: 
+    print("CONGRATULATIONS! YOU HAVE SUNK ALL THE SHIPS!")
  
