@@ -19,12 +19,16 @@ def if_sunk(ship_grid, ships):
     return ships
 
 def firing_solution(display_grid, ship_grid, row, col):
+    print(ship_grid)
     alpha = "ABCDEFGHIJ"
     result = f"{row + 1}:{alpha[col]} is a "
     if ship_grid[row][col] != ".":
-        ship_grid[row][col] = "x"
-        display_grid[row][col] = "X"
-        result += "HIT!"
+        if ship_grid[row][col] == "S":
+            ship_grid[row][col] == "s"
+        else: 
+            ship_grid[row][col] = "x"
+            display_grid[row][col] = "X"
+            result += "HIT!"
     else: 
         display_grid[row][col] = " "
         result += "MISS!"
